@@ -225,16 +225,6 @@ async fn chat_handler(
     // 🆕 [单次计费模式 1] 重置计费逻辑：初始化临时计数器
     let request_cost = Arc::new(AtomicU64::new(0));
     
-    // 🆕 [单次计费模式 2] 单次熔断：预估成本
-    let estimated_cost = types::estimate_cost(&model, &payload);
-    
-    println!("💰 [预估] 本次请求预估成本: ￥{:.4}, 当前累计: ￥{:.4}, 预算限额: ￥{:.4}", estimated_cost, current_cost, budget_limit);
-    
-    if estimated_cost > budget_limit {
-        println!("🛡️ [单次熔断生效] 预估成本 ￥{:.4} 超过预算限额 ￥{:.4}", estimated_cost, budget_limit);
-        return Ok((axum::http::StatusCode::PAYMENT_REQUIRED, "🛡️ 哨兵已熔断：预估成本超过预算限制").into_response());
-    }
-    
     // C. 注入记忆（只有当 load_history 为 true 时才加载历史对话）
     if load_history {
         let history = state.client.get_messages_from_redis(&session_id).await.unwrap_or_default();
