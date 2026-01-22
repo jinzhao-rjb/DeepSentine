@@ -1,0 +1,42 @@
+/target
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Redis data files
+dump.rdb
+*.rdb
+*.aof
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Test files
+test_*.py
+test_*.rs
+
+# Documentation files (keep local docs local)
+documents/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
+*.pdb
+*.exe
+
+# Rust
+Cargo.lock
